@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace WpOop\Containers;
 
@@ -16,7 +18,6 @@ use WP_Site;
  */
 class Sites implements ContainerInterface
 {
-
     use StringTranslatingTrait;
 
     /**
@@ -63,5 +64,4 @@ class Sites implements ContainerInterface
 
         return true;
     }
-
 }

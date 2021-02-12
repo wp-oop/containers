@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace WpOop\Containers\Options;
 
@@ -18,7 +20,6 @@ use UnexpectedValueException;
  */
 class BlogOptions implements MutableContainerInterface
 {
-
     use StringTranslatingTrait;
 
     /**
@@ -164,7 +165,7 @@ class BlogOptions implements MutableContainerInterface
      * @throws RuntimeException If problem setting.
      * @throws Throwable If problem running.
      */
-    protected function setOption(string $name, $value)
+    protected function setOption(string $name, $value): void
     {
         $blogId = $this->blogId;
 

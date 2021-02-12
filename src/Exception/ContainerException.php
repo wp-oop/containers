@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace WpOop\Containers\Exception;
 
@@ -43,5 +45,4 @@ class ContainerException extends Exception implements ContainerExceptionInterfac
     {
         return $this->container;
     }
-
 }

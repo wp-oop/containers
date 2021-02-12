@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace WpOop\Containers\Exception;
 
@@ -31,8 +33,8 @@ class NotFoundException extends ContainerException implements NotFoundExceptionI
      * @param string|null $dataKey The key that is not found.
      */
     public function __construct(
-        $message = "",
-        $code = 0,
+        string $message = "",
+        int $code = 0,
         Throwable $previous = null,
         ContainerInterface $container = null,
         string $dataKey = null

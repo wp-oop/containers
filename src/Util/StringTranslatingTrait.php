@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace WpOop\Containers\Util;
 
@@ -43,5 +45,4 @@ trait StringTranslatingTrait
     {
         return $string;
     }
-
 }

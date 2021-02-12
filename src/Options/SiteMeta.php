@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace WpOop\Containers\Options;
 
@@ -156,7 +158,7 @@ class SiteMeta implements MutableContainerInterface
      * @throws RuntimeException If problem setting.
      * @throws Throwable If problem running.
      */
-    protected function setMeta(string $name, $value)
+    protected function setMeta(string $name, $value): void
     {
         $siteId = $this->siteId;
 

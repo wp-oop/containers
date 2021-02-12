@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace WpOop\Containers\Options;
 
@@ -53,7 +54,7 @@ class SiteMetaContainer implements ContainerInterface
      *
      * @return MutableContainerInterface The metadata.
      */
-    public function get($id)
+    public function get($id): MutableContainerInterface
     {
         $site = $this->getSite($id);
         $id = (int) $site->blog_id;
@@ -134,5 +135,4 @@ class SiteMetaContainer implements ContainerInterface
 
         return $options;
     }
-
 }

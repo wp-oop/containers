@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace WpOop\Containers\Options;
 
@@ -19,7 +21,6 @@ use WP_Site;
  */
 class BlogOptionsContainer implements ContainerInterface
 {
-
     use StringTranslatingTrait;
 
     /**
@@ -53,7 +54,7 @@ class BlogOptionsContainer implements ContainerInterface
      *
      * @return MutableContainerInterface The options.
      */
-    public function get($id)
+    public function get($id): MutableContainerInterface
     {
         $site = $this->getSite($id);
         $id = (int) $site->blog_id;
@@ -132,5 +133,4 @@ class BlogOptionsContainer implements ContainerInterface
 
         return $options;
     }
-
 }
