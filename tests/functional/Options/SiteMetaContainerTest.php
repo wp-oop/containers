@@ -3,13 +3,13 @@
 namespace Dhii\Wp\Containers\FuncTest\Options;
 
 use Dhii\Data\Container\Exception\NotFoundExceptionInterface;
+use Dhii\Wp\Containers\Options\SiteMetaContainer as TestSubject;
 use Dhii\Wp\Containers\TestHelpers\ComponentMockeryTrait;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
-use Dhii\Wp\Containers\Options\BlogOptionsContainer as TestSubject;
 use PHPUnit\Framework\TestCase;
 
-class BlogOptionsContainerTest extends TestCase
+class SiteMetaContainerTest extends TestCase
 {
 
     use ComponentMockeryTrait;

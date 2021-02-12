@@ -2,14 +2,14 @@
 
 namespace Dhii\Wp\Containers\FuncTest\Options;
 
+use Brain\Monkey\Functions;
+use Dhii\Data\Container\Exception\ContainerExceptionInterface;
 use Dhii\Data\Container\Exception\NotFoundExceptionInterface;
+use Dhii\Wp\Containers\Options\SiteMeta as TestSubject;
 use Dhii\Wp\Containers\TestHelpers\ComponentMockeryTrait;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
-use Dhii\Wp\Containers\Options\SiteMeta as TestSubject;
 use PHPUnit\Framework\TestCase;
-use Brain\Monkey\Functions;
-use Dhii\Data\Container\Exception\ContainerExceptionInterface;
 use function Brain\Monkey\setUp;
 use function Brain\Monkey\tearDown;
 

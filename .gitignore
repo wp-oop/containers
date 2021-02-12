@@ -1,6 +1,6 @@
 /vendor/
-/test/log/
-/test/coverage/
+/tests/log/
+/tests/coverage/
 /.idea/workspace.xml
 .phpunit.result.cache
 /.env

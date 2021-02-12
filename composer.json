@@ -37,9 +37,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Dhii\\Wp\\Containers\\UnitTest\\": "test/unit",
-            "Dhii\\Wp\\Containers\\FuncTest\\": "test/functional",
-            "Dhii\\Wp\\Containers\\TestHelpers\\": "test/helpers"
+            "Dhii\\Wp\\Containers\\UnitTest\\": "tests/unit",
+            "Dhii\\Wp\\Containers\\FuncTest\\": "tests/functional",
+            "Dhii\\Wp\\Containers\\TestHelpers\\": "tests/helpers"
         }
     },
     "extra": {
