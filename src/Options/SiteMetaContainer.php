@@ -50,7 +50,7 @@ class SiteMetaContainer implements ContainerInterface
     /**
      * Retrieves metadata for a site with the specified ID.
      *
-     * @param int The ID of the site to retrieve metadata for.
+     * @param int|string $id The numeric ID of the site to retrieve metadata for.
      *
      * @return MutableContainerInterface The metadata.
      */

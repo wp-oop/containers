@@ -50,7 +50,7 @@ class BlogOptionsContainer implements ContainerInterface
     /**
      * Retrieves options for a site with the specified ID.
      *
-     * @param int The ID of the site to retrieve options for.
+     * @param int|string $id The numeric ID of the site to retrieve options for.
      *
      * @return MutableContainerInterface The options.
      */

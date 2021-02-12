@@ -26,6 +26,10 @@ class SiteMeta implements MutableContainerInterface
      * @var int
      */
     protected $siteId;
+
+    /**
+     * @var mixed
+     */
     protected $default;
 
     /**
