@@ -18,15 +18,13 @@ class SiteMetaTest extends TestCase
 
     use ComponentMockeryTrait;
 
-    protected function setUp()
+    protected function start()
     {
-        parent::setUp();
         setUp();
     }
 
-    protected function tearDown()
+    protected function stop()
     {
-        parent::tearDown();
         tearDown();
     }
 
@@ -51,6 +49,8 @@ class SiteMetaTest extends TestCase
      */
     public function testHasTrue()
     {
+        $this->start();
+
         {
             $siteId = rand(1, 99);
             $optionName = uniqid('option-name');
@@ -73,6 +73,8 @@ class SiteMetaTest extends TestCase
         {
             $this->assertTrue($result, 'Incorrectly determined not having');
         }
+
+        $this->stop();
     }
 
     /**
@@ -82,6 +84,8 @@ class SiteMetaTest extends TestCase
      */
     public function testHasFalse()
     {
+        $this->start();
+
         {
             $siteId = rand(1, 99);
             $optionName = uniqid('option-name');
@@ -103,6 +107,8 @@ class SiteMetaTest extends TestCase
         {
             $this->assertFalse($result, 'Incorrectly determined having');
         }
+
+        $this->stop();
     }
 
     /**
@@ -143,6 +149,8 @@ class SiteMetaTest extends TestCase
      */
     public function testGet($optionValue)
     {
+        $this->start();
+
         {
             $siteId = rand(1, 99);
             $optionName = uniqid('option-name');
@@ -164,6 +172,8 @@ class SiteMetaTest extends TestCase
         {
             $this->assertEquals($optionValue, $result, 'Incorrectly retrieved result');
         }
+
+        $this->stop();
     }
 
     /**
@@ -173,6 +183,8 @@ class SiteMetaTest extends TestCase
      */
     public function testGetNotFound()
     {
+        $this->start();
+
         {
             $siteId = rand(1, 99);
             $optionName = uniqid('option-name');
@@ -196,6 +208,8 @@ class SiteMetaTest extends TestCase
         {
             $this->assertEquals($optionValue, $result, 'Incorrectly retrieved result');
         }
+
+        $this->stop();
     }
 
     /**
@@ -346,6 +360,8 @@ class SiteMetaTest extends TestCase
      */
     public function testUnsetFailure()
     {
+        $this->start();
+
         {
             $blogId = rand(1, 99);
             $optionName = uniqid('option-name');
@@ -367,5 +383,7 @@ class SiteMetaTest extends TestCase
         {
             // Exception means success
         }
+
+        $this->stop();
     }
 }

@@ -17,15 +17,13 @@ class SitesTest extends TestCase
 
     use ComponentMockeryTrait;
 
-    protected function setUp()
+    protected function start()
     {
-        parent::setUp();
         setUp();
     }
 
-    protected function tearDown()
+    protected function stop()
     {
-        parent::tearDown();
         tearDown();
     }
 
@@ -47,6 +45,8 @@ class SitesTest extends TestCase
      */
     public function testGet()
     {
+        $this->start();
+
         {
             $siteId = rand(1, 9);
             $site = $this->getMockBuilder('WP_Site')
@@ -66,6 +66,8 @@ class SitesTest extends TestCase
         {
             $this->assertSame($site, $result, 'Wrong site retrieved');
         }
+
+        $this->stop();
     }
 
     /**
@@ -75,6 +77,8 @@ class SitesTest extends TestCase
      */
     public function testGetNotFound()
     {
+        $this->start();
+
         {
             $siteId = rand(1, 9);
             $subject = $this->createSubject([]);
@@ -88,6 +92,8 @@ class SitesTest extends TestCase
             $this->expectException('Psr\Container\NotFoundExceptionInterface');
             $subject->get($siteId);
         }
+
+        $this->stop();
     }
 
     /**
@@ -97,6 +103,8 @@ class SitesTest extends TestCase
      */
     public function testHasFalse()
     {
+        $this->start();
+
         {
             $siteId = rand(1, 9);
             $subject = $this->createSubject([], ['get']);
@@ -119,6 +127,8 @@ class SitesTest extends TestCase
         {
             $this->assertFalse($result, 'Wrongly determined having');
         }
+
+        $this->stop();
     }
 
     /**
@@ -128,6 +138,8 @@ class SitesTest extends TestCase
      */
     public function testHasTrue()
     {
+        $this->start();
+
         {
             $siteId = rand(1, 9);
             $site = $this->getMockBuilder('WP_Site')
@@ -148,6 +160,8 @@ class SitesTest extends TestCase
         {
             $this->assertTrue($result, 'Wrongly determined not having');
         }
+
+        $this->stop();
     }
 
 }

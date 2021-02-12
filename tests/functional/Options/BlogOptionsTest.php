@@ -18,15 +18,13 @@ class BlogOptionsTest extends TestCase
 
     use ComponentMockeryTrait;
 
-    protected function setUp()
+    protected function start()
     {
-        parent::setUp();
         setUp();
     }
 
-    protected function tearDown()
+    protected function stop()
     {
-        parent::tearDown();
         tearDown();
     }
 
@@ -51,6 +49,8 @@ class BlogOptionsTest extends TestCase
      */
     public function testHasTrue()
     {
+        $this->start();
+
         {
             $blogId = rand(1, 99);
             $optionName = uniqid('option-name');
@@ -73,6 +73,8 @@ class BlogOptionsTest extends TestCase
         {
             $this->assertTrue($result, 'Incorrectly determined not having');
         }
+
+        $this->stop();
     }
 
     /**
@@ -82,6 +84,8 @@ class BlogOptionsTest extends TestCase
      */
     public function testHasFalse()
     {
+        $this->start();
+
         {
             $blogId = rand(1, 99);
             $optionName = uniqid('option-name');
@@ -103,6 +107,8 @@ class BlogOptionsTest extends TestCase
         {
             $this->assertFalse($result, 'Incorrectly determined having');
         }
+
+        $this->stop();
     }
 
     /**
@@ -346,6 +352,8 @@ class BlogOptionsTest extends TestCase
      */
     public function testDeleteFailure()
     {
+        $this->start();
+
         {
             $blogId = rand(1, 99);
             $optionName = uniqid('option-name');
@@ -367,5 +375,7 @@ class BlogOptionsTest extends TestCase
         {
             // Exception means success
         }
+
+        $this->stop();
     }
 }
