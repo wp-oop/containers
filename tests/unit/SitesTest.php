@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Dhii\Wp\Containers\FuncTest;
+namespace Dhii\Wp\Containers\UnitTest;
 
 use Brain\Monkey\Functions;
 use Dhii\Wp\Containers\Sites as TestSubject;
