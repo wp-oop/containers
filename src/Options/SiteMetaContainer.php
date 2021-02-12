@@ -1,12 +1,12 @@
 <?php
 
 
-namespace Dhii\Wp\Containers\Options;
+namespace WpOop\Containers\Options;
 
 use Dhii\Data\Container\ContainerInterface;
 use Dhii\Data\Container\WritableContainerInterface;
-use Dhii\Wp\Containers\Exception\ContainerException;
-use Dhii\Wp\Containers\Util\StringTranslatingTrait;
+use WpOop\Containers\Exception\ContainerException;
+use WpOop\Containers\Util\StringTranslatingTrait;
 use Exception;
 use Psr\Container\ContainerInterface as BaseContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -16,7 +16,7 @@ use WP_Site;
 /**
  * Creates and returns metadata containers for sites.
  *
- * @package Dhii\Wp\Containers
+ * @package WpOop\Containers
  */
 class SiteMetaContainer implements ContainerInterface
 {

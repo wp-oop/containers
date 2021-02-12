@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace Dhii\Wp\Containers\Options;
+namespace WpOop\Containers\Options;
 
 use Dhii\Data\Container\WritableContainerInterface;
-use Dhii\Wp\Containers\Exception\ContainerException;
+use WpOop\Containers\Exception\ContainerException;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Dhii\Wp\Containers\Util\StringTranslatingTrait;
+use WpOop\Containers\Util\StringTranslatingTrait;
 use Exception;
 use Dhii\Data\Container\ContainerInterface;
 use Psr\Container\ContainerInterface as BaseContainerInterface;
@@ -16,7 +16,7 @@ use WP_Site; // Counting on this being there when in WordPress
 /**
  * Creates and returns option containers for sites.
  *
- * @package Dhii\Wp\Containers
+ * @package WpOop\Containers
  */
 class BlogOptionsContainer implements ContainerInterface
 {

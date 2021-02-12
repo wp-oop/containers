@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Dhii\Wp\Containers\Exception;
+namespace WpOop\Containers\Exception;
 
 use Dhii\Data\Container\Exception\NotFoundExceptionInterface;
 use Psr\Container\ContainerInterface;
@@ -9,7 +9,7 @@ use Throwable;
 /**
  * Basic implementation of container exception.
  *
- * @package Dhii\Wp\Containers
+ * @package WpOop\Containers
  */
 class NotFoundException extends ContainerException implements NotFoundExceptionInterface
 {

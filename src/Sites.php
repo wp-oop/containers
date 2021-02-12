@@ -1,18 +1,18 @@
 <?php declare(strict_types = 1);
 
-namespace Dhii\Wp\Containers;
+namespace WpOop\Containers;
 
 use Dhii\Data\Container\ContainerInterface;
-use Dhii\Wp\Containers\Exception\ContainerException;
-use Dhii\Wp\Containers\Exception\NotFoundException;
-use Dhii\Wp\Containers\Util\StringTranslatingTrait;
+use WpOop\Containers\Exception\ContainerException;
+use WpOop\Containers\Exception\NotFoundException;
+use WpOop\Containers\Util\StringTranslatingTrait;
 use Psr\Container\NotFoundExceptionInterface;
 use WP_Site;
 
 /**
  * Allows retrieval of WP site objects by ID.
  *
- * @package Dhii\Wp\Containers
+ * @package WpOop\Containers
  */
 class Sites implements ContainerInterface
 {

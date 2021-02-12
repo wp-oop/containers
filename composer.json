@@ -32,14 +32,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Dhii\\Wp\\Containers\\": "src/"
+            "WpOop\\Containers\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Dhii\\Wp\\Containers\\UnitTest\\": "tests/unit",
-            "Dhii\\Wp\\Containers\\FuncTest\\": "tests/functional",
-            "Dhii\\Wp\\Containers\\TestHelpers\\": "tests/helpers"
+            "WpOop\\Containers\\UnitTest\\": "tests/unit",
+            "WpOop\\Containers\\FuncTest\\": "tests/functional",
+            "WpOop\\Containers\\TestHelpers\\": "tests/helpers"
         }
     },
     "extra": {

@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace Dhii\Wp\Containers\FuncTest\Exception;
+namespace WpOop\Containers\FuncTest\Exception;
 
-use Dhii\Wp\Containers\Exception\ContainerException as TestSubject;
-use Dhii\Wp\Containers\TestHelpers\ComponentMockeryTrait;
+use WpOop\Containers\Exception\ContainerException as TestSubject;
+use WpOop\Containers\TestHelpers\ComponentMockeryTrait;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Tests {@see TestSubject}.
  *
- * @package Dhii\Wp\Containers
+ * @package WpOop\Containers
  */
 class ContainerExceptionTest extends TestCase
 {

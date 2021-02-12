@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Dhii\Wp\Containers\TestHelpers;
+namespace WpOop\Containers\TestHelpers;
 
 use Andrew\Proxy;
 use Dhii\Data\Container\Exception\NotFoundExceptionInterface;

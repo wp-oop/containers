@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Dhii\Wp\Containers\Exception;
+namespace WpOop\Containers\Exception;
 
 use Dhii\Data\Container\Exception\ContainerExceptionInterface;
 use Exception;
@@ -10,7 +10,7 @@ use Throwable;
 /**
  * Basic implementation of container exception.
  *
- * @package Dhii\Wp\Containers
+ * @package WpOop\Containers
  */
 class ContainerException extends Exception implements ContainerExceptionInterface
 {

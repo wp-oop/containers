@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Dhii\Wp\Containers\UnitTest;
+namespace WpOop\Containers\UnitTest;
 
 use Brain\Monkey\Functions;
-use Dhii\Wp\Containers\Sites as TestSubject;
-use Dhii\Wp\Containers\TestHelpers\ComponentMockeryTrait;
+use WpOop\Containers\Sites as TestSubject;
+use WpOop\Containers\TestHelpers\ComponentMockeryTrait;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

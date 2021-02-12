@@ -1,12 +1,12 @@
 <?php
 
-namespace Dhii\Wp\Containers\FuncTest\Options;
+namespace WpOop\Containers\FuncTest\Options;
 
 use Brain\Monkey\Functions;
 use Dhii\Data\Container\Exception\ContainerExceptionInterface;
 use Dhii\Data\Container\Exception\NotFoundExceptionInterface;
-use Dhii\Wp\Containers\Options\BlogOptions as TestSubject;
-use Dhii\Wp\Containers\TestHelpers\ComponentMockeryTrait;
+use WpOop\Containers\Options\BlogOptions as TestSubject;
+use WpOop\Containers\TestHelpers\ComponentMockeryTrait;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

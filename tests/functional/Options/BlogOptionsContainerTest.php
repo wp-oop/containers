@@ -1,10 +1,10 @@
 <?php
 
-namespace Dhii\Wp\Containers\FuncTest\Options;
+namespace WpOop\Containers\FuncTest\Options;
 
 use Dhii\Data\Container\Exception\NotFoundExceptionInterface;
-use Dhii\Wp\Containers\Options\BlogOptionsContainer as TestSubject;
-use Dhii\Wp\Containers\TestHelpers\ComponentMockeryTrait;
+use WpOop\Containers\Options\BlogOptionsContainer as TestSubject;
+use WpOop\Containers\TestHelpers\ComponentMockeryTrait;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
