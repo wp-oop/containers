@@ -2,7 +2,7 @@
 
 namespace WpOop\Containers\Exception;
 
-use Dhii\Data\Container\Exception\ContainerExceptionInterface;
+use Psr\Container\ContainerExceptionInterface;
 use Exception;
 use Psr\Container\ContainerInterface;
 use Throwable;

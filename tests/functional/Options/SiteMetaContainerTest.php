@@ -2,7 +2,7 @@
 
 namespace WpOop\Containers\FuncTest\Options;
 
-use Dhii\Data\Container\Exception\NotFoundExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use WpOop\Containers\Options\SiteMetaContainer as TestSubject;
 use WpOop\Containers\TestHelpers\ComponentMockeryTrait;
 use Exception;

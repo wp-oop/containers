@@ -3,8 +3,8 @@
 namespace WpOop\Containers\FuncTest\Options;
 
 use Brain\Monkey\Functions;
-use Dhii\Data\Container\Exception\ContainerExceptionInterface;
-use Dhii\Data\Container\Exception\NotFoundExceptionInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use WpOop\Containers\Options\SiteMeta as TestSubject;
 use WpOop\Containers\TestHelpers\ComponentMockeryTrait;
 use Exception;
@@ -315,7 +315,7 @@ class SiteMetaTest extends TestCase
      *
      * @throws Exception If problem testing.
      */
-    public function testDelete()
+    public function testUnset()
     {
         {
             $blogId = rand(1, 99);
@@ -331,7 +331,7 @@ class SiteMetaTest extends TestCase
         }
 
         {
-            $subject->delete($optionName);
+            $subject->unset($optionName);
         }
 
         {
@@ -344,7 +344,7 @@ class SiteMetaTest extends TestCase
      *
      * @throws Exception If problem testing.
      */
-    public function testDeleteFailure()
+    public function testUnsetFailure()
     {
         {
             $blogId = rand(1, 99);
@@ -361,7 +361,7 @@ class SiteMetaTest extends TestCase
 
         {
             $this->expectException(ContainerExceptionInterface::class);
-            $subject->delete($optionName);
+            $subject->unset($optionName);
         }
 
         {

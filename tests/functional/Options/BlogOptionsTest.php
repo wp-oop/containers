@@ -3,8 +3,8 @@
 namespace WpOop\Containers\FuncTest\Options;
 
 use Brain\Monkey\Functions;
-use Dhii\Data\Container\Exception\ContainerExceptionInterface;
-use Dhii\Data\Container\Exception\NotFoundExceptionInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use WpOop\Containers\Options\BlogOptions as TestSubject;
 use WpOop\Containers\TestHelpers\ComponentMockeryTrait;
 use Exception;
@@ -331,7 +331,7 @@ class BlogOptionsTest extends TestCase
         }
 
         {
-            $subject->delete($optionName);
+            $subject->unset($optionName);
         }
 
         {
@@ -361,7 +361,7 @@ class BlogOptionsTest extends TestCase
 
         {
             $this->expectException(ContainerExceptionInterface::class);
-            $subject->delete($optionName);
+            $subject->unset($optionName);
         }
 
         {
