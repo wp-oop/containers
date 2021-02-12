@@ -3,8 +3,8 @@
 
 namespace WpOop\Containers\Options;
 
-use Dhii\Data\Container\ContainerInterface;
-use Dhii\Data\Container\WritableContainerInterface;
+use Dhii\Collection\ContainerInterface;
+use Dhii\Collection\MutableContainerInterface;
 use WpOop\Containers\Exception\ContainerException;
 use WpOop\Containers\Util\StringTranslatingTrait;
 use Exception;
@@ -51,15 +51,15 @@ class SiteMetaContainer implements ContainerInterface
      *
      * @param int The ID of the site to retrieve metadata for.
      *
-     * @return WritableContainerInterface The metadata.
+     * @return MutableContainerInterface The metadata.
      */
     public function get($id)
     {
-        $site = $this->_getSite($id);
+        $site = $this->getSite($id);
         $id = (int) $site->blog_id;
 
         try {
-            $options = $this->_createMeta($id);
+            $options = $this->createMeta($id);
         } catch (Exception $e) {
             throw new ContainerException(
                 $this->__('Could not get meta for site #%1$d', [$id]),
@@ -78,7 +78,7 @@ class SiteMetaContainer implements ContainerInterface
     public function has($id)
     {
         try {
-            $this->_getSite($id);
+            $this->getSite($id);
         } catch (NotFoundExceptionInterface $e) {
             return false;
         } catch (Exception $e) {
@@ -102,7 +102,7 @@ class SiteMetaContainer implements ContainerInterface
      * @throws Exception If problem retrieving.
      * @throws Throwable If problem running.
      */
-    protected function _getSite($id): WP_Site
+    protected function getSite($id): WP_Site
     {
         $site = $this->sitesContainer->get($id);
 
@@ -114,11 +114,11 @@ class SiteMetaContainer implements ContainerInterface
      *
      * @param int $siteId The ID of the site to get the metadata for.
      *
-     * @return WritableContainerInterface The metadata.
+     * @return MutableContainerInterface The metadata.
      *
      * @throws Exception If problem creating.
      */
-    protected function _createMeta(int $siteId): WritableContainerInterface
+    protected function createMeta(int $siteId): MutableContainerInterface
     {
         $factory = $this->optionsFactory;
 

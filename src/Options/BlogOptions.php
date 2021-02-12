@@ -2,13 +2,11 @@
 
 namespace WpOop\Containers\Options;
 
-use Dhii\Data\Container\WritableContainerInterface;
-use Dhii\Util\String\StringableInterface as Stringable;
+use Dhii\Collection\MutableContainerInterface;
 use WpOop\Containers\Exception\ContainerException;
 use WpOop\Containers\Exception\NotFoundException;
 use WpOop\Containers\Util\StringTranslatingTrait;
 use Exception;
-use Psr\Container\ContainerExceptionInterface;
 use RuntimeException;
 use Throwable;
 use UnexpectedValueException;
@@ -18,7 +16,7 @@ use UnexpectedValueException;
  *
  * @package WpOop\Containers
  */
-class BlogOptions implements WritableContainerInterface
+class BlogOptions implements MutableContainerInterface
 {
 
     use StringTranslatingTrait;
@@ -52,7 +50,7 @@ class BlogOptions implements WritableContainerInterface
     public function get($id)
     {
         try {
-            return $this->_getOption($id);
+            return $this->getOption($id);
         } catch (UnexpectedValueException $e) {
             throw new NotFoundException(
                 $this->__('Key "%1$s" not found', [$id]),
@@ -77,7 +75,7 @@ class BlogOptions implements WritableContainerInterface
     public function has($id)
     {
         try {
-            $this->_getOption($id);
+            $this->getOption($id);
 
             return true;
         } catch (UnexpectedValueException $e) {
@@ -95,10 +93,10 @@ class BlogOptions implements WritableContainerInterface
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value)
+    public function set(string $key, $value): void
     {
         try {
-            $this->_setOption($key, $value);
+            $this->setOption($key, $value);
         } catch (Exception $e) {
             throw new ContainerException(
                 $this->__('Could not set value for key "%1$s"', [$key]),
@@ -112,7 +110,7 @@ class BlogOptions implements WritableContainerInterface
     /**
      * {@inheritDoc}
      */
-    public function delete($key)
+    public function unset(string $key): void
     {
         $blogId = $this->blogId;
         $result = delete_blog_option($blogId, $key);
@@ -138,7 +136,7 @@ class BlogOptions implements WritableContainerInterface
      * @throws RuntimeException If problem retrieving.
      * @throws Throwable If problem running.
      */
-    protected function _getOption(string $name)
+    protected function getOption(string $name)
     {
         $blogId = $this->blogId;
         $default = $this->default;
@@ -166,13 +164,13 @@ class BlogOptions implements WritableContainerInterface
      * @throws RuntimeException If problem setting.
      * @throws Throwable If problem running.
      */
-    protected function _setOption(string $name, $value)
+    protected function setOption(string $name, $value)
     {
         $blogId = $this->blogId;
 
         $isSuccessful = update_blog_option($blogId, $name, $value);
         if (!$isSuccessful) {
-            $newValue = $this->_getOption($name);
+            $newValue = $this->getOption($name);
             $isSuccessful = $value === $newValue;
         }
 

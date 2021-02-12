@@ -2,16 +2,15 @@
 
 namespace WpOop\Containers\Options;
 
-use Dhii\Data\Container\WritableContainerInterface;
+use Dhii\Collection\MutableContainerInterface;
+use Dhii\Collection\ContainerInterface;
 use WpOop\Containers\Exception\ContainerException;
-use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use WpOop\Containers\Util\StringTranslatingTrait;
 use Exception;
-use Dhii\Data\Container\ContainerInterface;
 use Psr\Container\ContainerInterface as BaseContainerInterface;
 use Throwable;
-use WP_Site; // Counting on this being there when in WordPress
+use WP_Site;
 
 /**
  * Creates and returns option containers for sites.
@@ -52,15 +51,15 @@ class BlogOptionsContainer implements ContainerInterface
      *
      * @param int The ID of the site to retrieve options for.
      *
-     * @return WritableContainerInterface The options.
+     * @return MutableContainerInterface The options.
      */
     public function get($id)
     {
-        $site = $this->_getSite($id);
+        $site = $this->getSite($id);
         $id = (int) $site->blog_id;
 
         try {
-            $options = $this->_createOptions($id);
+            $options = $this->createOptions($id);
         } catch (Exception $e) {
             throw new ContainerException(
                 $this->__('Could not get options for site #%1$d', [$id]),
@@ -79,7 +78,7 @@ class BlogOptionsContainer implements ContainerInterface
     public function has($id)
     {
         try {
-            $this->_getSite($id);
+            $this->getSite($id);
         } catch (NotFoundExceptionInterface $e) {
             return false;
         } catch (Exception $e) {
@@ -103,7 +102,7 @@ class BlogOptionsContainer implements ContainerInterface
      * @throws Exception If problem retrieving.
      * @throws Throwable If problem running.
      */
-    protected function _getSite($id): WP_Site
+    protected function getSite($id): WP_Site
     {
         $site = $this->sitesContainer->get($id);
 
@@ -114,10 +113,10 @@ class BlogOptionsContainer implements ContainerInterface
      * Creates a container that represents options for a specific site.
      *
      * @param int $siteId The ID of the site to get the options for.
-     * @return WritableContainerInterface The options.
+     * @return MutableContainerInterface The options.
      * @throws Exception If problem creating.
      */
-    protected function _createOptions(int $siteId): WritableContainerInterface
+    protected function createOptions(int $siteId): MutableContainerInterface
     {
         $factory = $this->optionsFactory;
 

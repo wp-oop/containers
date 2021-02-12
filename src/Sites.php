@@ -2,7 +2,7 @@
 
 namespace WpOop\Containers;
 
-use Dhii\Data\Container\ContainerInterface;
+use Dhii\Collection\ContainerInterface;
 use WpOop\Containers\Exception\ContainerException;
 use WpOop\Containers\Exception\NotFoundException;
 use WpOop\Containers\Util\StringTranslatingTrait;

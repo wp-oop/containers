@@ -2,7 +2,8 @@
 
 namespace WpOop\Containers\FuncTest\Options;
 
-use Dhii\Data\Container\Exception\NotFoundExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use WP_Site;
 use WpOop\Containers\Options\BlogOptionsContainer as TestSubject;
 use WpOop\Containers\TestHelpers\ComponentMockeryTrait;
 use Exception;
