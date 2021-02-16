@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Dhii\Wp\Containers\TestHelpers;
+namespace WpOop\Containers\TestHelpers;
 
 use Andrew\Proxy;
-use Dhii\Data\Container\Exception\NotFoundExceptionInterface;
-use Dhii\Data\Container\WritableContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use Dhii\Collection\MutableContainerInterface;
 use Exception;
 use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -182,16 +182,16 @@ EOL;
      *
      * @param array $services The map of service name to service value.
      *
-     * @return WritableContainerInterface|MockObject
+     * @return MutableContainerInterface|MockObject
      *
      * @throws Exception If problem creating.
      */
-    protected function createWritableContainer(array $services = []): WritableContainerInterface
+    protected function createWritableContainer(array $services = []): MutableContainerInterface
     {
-        $mock = $this->getMockBuilder(WritableContainerInterface::class)
-            ->setMethods(['has', 'get', 'set', 'delete'])
+        $mock = $this->getMockBuilder(MutableContainerInterface::class)
+            ->setMethods(['has', 'get', 'set', 'unset'])
             ->getMock();
-        assert($mock instanceof WritableContainerInterface);
+        assert($mock instanceof MutableContainerInterface);
 
         $mock->method('get')
             ->willReturnCallback(function ($key) use ($services, $mock) {
@@ -247,13 +247,4 @@ EOL;
     {
         return new Proxy($object);
     }
-
-    /**
-     * Requiring PHPUnit TestCase's method.
-     *
-     * @param string $className Name of the class to get a builder for.
-     *
-     * @return MockBuilder The mock builder.
-     */
-    abstract function getMockBuilder($className);
 }

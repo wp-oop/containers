@@ -1,26 +1,28 @@
-<?php declare(strict_types = 1);
+<?php
 
-namespace Dhii\Wp\Containers;
+declare(strict_types=1);
 
-use Dhii\Data\Container\ContainerInterface;
-use Dhii\Wp\Containers\Exception\ContainerException;
-use Dhii\Wp\Containers\Exception\NotFoundException;
-use Dhii\Wp\Containers\Util\StringTranslatingTrait;
+namespace WpOop\Containers;
+
+use Dhii\Collection\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use WP_Site;
+use WpOop\Containers\Exception\NotFoundException;
+use WpOop\Containers\Util\StringTranslatingTrait;
 
 /**
  * Allows retrieval of WP site objects by ID.
  *
- * @package Dhii\Wp\Containers
+ * @package WpOop\Containers
  */
 class Sites implements ContainerInterface
 {
-
     use StringTranslatingTrait;
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-suppress MissingParamType Missing in PSR-11.
      *
      * @return WP_Site The site for the specified ID.
      */
@@ -30,17 +32,8 @@ class Sites implements ContainerInterface
 
         if (!$site) {
             throw new NotFoundException(
+                (string) $id,
                 $this->__('No site found for ID "%1$d"', [$id]),
-                0,
-                null,
-                $this,
-                (string) $id
-            );
-        }
-
-        if (!($site instanceof WP_Site)) {
-            throw new ContainerException(
-                $this->__('Site #%1$d is invalid', [$id]),
                 0,
                 null,
                 $this
@@ -52,9 +45,12 @@ class Sites implements ContainerInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-suppress MissingParamType Missing in PSR-11.
      */
     public function has($id)
     {
+        /** @psalm-suppress InvalidCatch */
         try {
             $site = $this->get($id);
         } catch (NotFoundExceptionInterface $e) {
@@ -63,5 +59,4 @@ class Sites implements ContainerInterface
 
         return true;
     }
-
 }

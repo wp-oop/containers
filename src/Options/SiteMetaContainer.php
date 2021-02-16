@@ -1,22 +1,23 @@
 <?php
 
+declare(strict_types=1);
 
-namespace Dhii\Wp\Containers\Options;
+namespace WpOop\Containers\Options;
 
-use Dhii\Data\Container\ContainerInterface;
-use Dhii\Data\Container\WritableContainerInterface;
-use Dhii\Wp\Containers\Exception\ContainerException;
-use Dhii\Wp\Containers\Util\StringTranslatingTrait;
+use Dhii\Collection\ContainerInterface;
+use Dhii\Collection\MutableContainerInterface;
 use Exception;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface as BaseContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Throwable;
 use WP_Site;
+use WpOop\Containers\Exception\ContainerException;
+use WpOop\Containers\Util\StringTranslatingTrait;
 
 /**
  * Creates and returns metadata containers for sites.
  *
- * @package Dhii\Wp\Containers
+ * @package WpOop\Containers
  */
 class SiteMetaContainer implements ContainerInterface
 {
@@ -49,17 +50,21 @@ class SiteMetaContainer implements ContainerInterface
     /**
      * Retrieves metadata for a site with the specified ID.
      *
-     * @param int The ID of the site to retrieve metadata for.
+     * @inheritDoc
      *
-     * @return WritableContainerInterface The metadata.
+     * @param int|string $id The numeric ID of the site to retrieve metadata for.
+     *
+     * @return MutableContainerInterface The metadata.
      */
-    public function get($id)
+    public function get($id): MutableContainerInterface
     {
-        $site = $this->_getSite($id);
-        $id = (int) $site->blog_id;
-
+        /** @psalm-suppress InvalidCatch PSR-11 exceptions will always implement the interface */
         try {
-            $options = $this->_createMeta($id);
+            $site = $this->getSite($id);
+            $id = (int) $site->blog_id;
+            $options = $this->createMeta($id);
+        } catch (ContainerExceptionInterface $e) {
+            throw $e;
         } catch (Exception $e) {
             throw new ContainerException(
                 $this->__('Could not get meta for site #%1$d', [$id]),
@@ -74,11 +79,14 @@ class SiteMetaContainer implements ContainerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @psalm-suppress MissingParamType Missing in PSR-11.
      */
     public function has($id)
     {
+        /** @psalm-suppress InvalidCatch PSR-11 exceptions will always implement respective interfaces */
         try {
-            $this->_getSite($id);
+            $this->getSite($id);
         } catch (NotFoundExceptionInterface $e) {
             return false;
         } catch (Exception $e) {
@@ -98,13 +106,14 @@ class SiteMetaContainer implements ContainerInterface
      *
      * @param int|string $id The ID of the site to retrieve.
      * @return WP_Site The site instance.
+     * @psalm-suppress InvalidThrow PSR-11 exceptions always implement respective interfaces
      * @throws NotFoundExceptionInterface If problem retrieving.
      * @throws Exception If problem retrieving.
-     * @throws Throwable If problem running.
+     * @throws ContainerExceptionInterface If problem retrieving.
      */
-    protected function _getSite($id): WP_Site
+    protected function getSite($id): WP_Site
     {
-        $site = $this->sitesContainer->get($id);
+        $site = $this->sitesContainer->get((string) $id);
 
         return $site;
     }
@@ -114,18 +123,18 @@ class SiteMetaContainer implements ContainerInterface
      *
      * @param int $siteId The ID of the site to get the metadata for.
      *
-     * @return WritableContainerInterface The metadata.
+     * @return MutableContainerInterface The metadata.
      *
      * @throws Exception If problem creating.
      */
-    protected function _createMeta(int $siteId): WritableContainerInterface
+    protected function createMeta(int $siteId): MutableContainerInterface
     {
         $factory = $this->optionsFactory;
 
         if (!is_callable($factory)) {
             throw new Exception(
                 $this->__('Could not invoke metadata factory'),
-                null,
+                0,
                 null
             );
         }
@@ -134,5 +143,4 @@ class SiteMetaContainer implements ContainerInterface
 
         return $options;
     }
-
 }

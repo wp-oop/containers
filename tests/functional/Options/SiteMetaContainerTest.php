@@ -1,12 +1,12 @@
 <?php
 
-namespace Dhii\Wp\Containers\FuncTest\Options;
+namespace WpOop\Containers\FuncTest\Options;
 
-use Dhii\Data\Container\Exception\NotFoundExceptionInterface;
-use Dhii\Wp\Containers\TestHelpers\ComponentMockeryTrait;
+use Psr\Container\NotFoundExceptionInterface;
+use WpOop\Containers\Options\SiteMetaContainer as TestSubject;
+use WpOop\Containers\TestHelpers\ComponentMockeryTrait;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
-use Dhii\Wp\Containers\Options\SiteMetaContainer as TestSubject;
 use PHPUnit\Framework\TestCase;
 
 class SiteMetaContainerTest extends TestCase

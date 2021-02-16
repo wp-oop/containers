@@ -1,19 +1,18 @@
 <?php declare(strict_types = 1);
 
-namespace Dhii\Wp\Containers\FuncTest\Exception;
+namespace WpOop\Containers\FuncTest\Exception;
 
-use Dhii\Wp\Containers\Exception\ContainerException as TestSubject;
-use Dhii\Wp\Containers\TestHelpers\ComponentMockeryTrait;
+use WpOop\Containers\Exception\NotFoundException as TestSubject;
+use WpOop\Containers\TestHelpers\ComponentMockeryTrait;
 use Exception;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Tests {@see TestSubject}.
  *
- * @package Dhii\Wp\Containers
+ * @package WpOop\Containers
  */
-class ContainerExceptionTest extends TestCase
+class NotFoundExceptionTest extends TestCase
 {
 
     use ComponentMockeryTrait;
@@ -22,7 +21,6 @@ class ContainerExceptionTest extends TestCase
      * Creates a new instance of the test subject.
      *
      * @param array $dependencies A list of constructor args.
-     * @param array|null $methods The names of methods to mock in the subject.
      * @return MockObject|TestSubject The new instance.
      * @throws Exception If problem creating.
      */
@@ -44,8 +42,9 @@ class ContainerExceptionTest extends TestCase
             $code = rand(1, 99);
             $prev = new Exception(uniqid('inner-message'));
             $container = $this->createContainer([]);
+            $dataKey = uniqid('data-key');
 
-            $subject = $this->createSubject([$message, $code, $prev, $container], null);
+            $subject = $this->createSubject([$dataKey, $message, $code, $prev, $container,], null);
         }
 
         {
@@ -56,6 +55,7 @@ class ContainerExceptionTest extends TestCase
                 $this->assertSame($code, $e->getCode(), 'Wrong code');
                 $this->assertSame($prev, $e->getPrevious(), 'Wrong previous exception');
                 $this->assertSame($container, $e->getContainer(), 'Wrong container');
+                $this->assertSame($dataKey, $e->getDataKey(), 'Wrong data key');
             }
         }
     }

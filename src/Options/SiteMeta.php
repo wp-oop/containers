@@ -1,22 +1,23 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Dhii\Wp\Containers\Options;
+declare(strict_types=1);
 
-use Dhii\Data\Container\WritableContainerInterface;
-use Dhii\Wp\Containers\Exception\ContainerException;
-use Dhii\Wp\Containers\Exception\NotFoundException;
-use Dhii\Wp\Containers\Util\StringTranslatingTrait;
+namespace WpOop\Containers\Options;
+
+use Dhii\Collection\MutableContainerInterface;
 use Exception;
 use RuntimeException;
-use Throwable;
 use UnexpectedValueException;
+use WpOop\Containers\Exception\ContainerException;
+use WpOop\Containers\Exception\NotFoundException;
+use WpOop\Containers\Util\StringTranslatingTrait;
 
 /**
  * Metadata for a particular site.
  *
- * @package Dhii\Wp\Containers\
+ * @package WpOop\Containers\
  */
-class SiteMeta implements WritableContainerInterface
+class SiteMeta implements MutableContainerInterface
 {
     use StringTranslatingTrait;
 
@@ -24,6 +25,10 @@ class SiteMeta implements WritableContainerInterface
      * @var int
      */
     protected $siteId;
+
+    /**
+     * @var mixed
+     */
     protected $default;
 
     /**
@@ -38,18 +43,20 @@ class SiteMeta implements WritableContainerInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-suppress MissingParamType Missing in PSR-11.
      */
     public function get($id)
     {
         try {
-            return $this->_getMeta($id);
+            return $this->getMeta($id);
         } catch (UnexpectedValueException $e) {
             throw new NotFoundException(
+                $id,
                 $this->__('Meta key "%1$s" not found', [$id]),
                 0,
                 $e,
-                $this,
-                $id
+                $this
             );
         } catch (Exception $e) {
             throw new ContainerException(
@@ -63,11 +70,13 @@ class SiteMeta implements WritableContainerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @psalm-suppress MissingParamType Missing in PSR-11.
      */
     public function has($id)
     {
         try {
-            $this->_getMeta($id);
+            $this->getMeta($id);
 
             return true;
         } catch (UnexpectedValueException $e) {
@@ -85,10 +94,10 @@ class SiteMeta implements WritableContainerInterface
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value)
+    public function set(string $key, $value): void
     {
         try {
-            $this->_setMeta($key, $value);
+            $this->setMeta($key, $value);
         } catch (Exception $e) {
             throw new ContainerException(
                 $this->__('Could not set value for meta key "%1$s"', [$key]),
@@ -102,7 +111,7 @@ class SiteMeta implements WritableContainerInterface
     /**
      * {@inheritDoc}
      */
-    public function delete($key)
+    public function unset(string $key): void
     {
         $siteId = $this->siteId;
         $result = delete_network_option($siteId, $key);
@@ -126,9 +135,9 @@ class SiteMeta implements WritableContainerInterface
      *
      * @throws UnexpectedValueException If the meta value matches the configured default.
      * @throws RuntimeException If problem retrieving.
-     * @throws Throwable If problem running.
+     * @throws Exception If problem running.
      */
-    protected function _getMeta(string $name)
+    protected function getMeta(string $name)
     {
         $siteId = $this->siteId;
         $default = $this->default;
@@ -154,18 +163,19 @@ class SiteMeta implements WritableContainerInterface
      *
      * @throws UnexpectedValueException If new meta value does not match what was being set.
      * @throws RuntimeException If problem setting.
-     * @throws Throwable If problem running.
+     * @throws Exception If problem running.
      */
-    protected function _setMeta(string $name, $value)
+    protected function setMeta(string $name, $value): void
     {
         $siteId = $this->siteId;
 
         $isSuccessful = update_network_option($siteId, $name, $value);
         if (!$isSuccessful) {
-            $newValue = $this->_getMeta($name);
+            $newValue = $this->getMeta($name);
             $isSuccessful = $value === $newValue;
         }
 
+        /** @psalm-suppress PossiblyUndefinedVariable If unsuccessful, $newValue will be defined */
         if (!$isSuccessful) {
             throw new UnexpectedValueException(
                 $this->__(

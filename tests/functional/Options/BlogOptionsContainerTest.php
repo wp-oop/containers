@@ -1,12 +1,13 @@
 <?php
 
-namespace Dhii\Wp\Containers\FuncTest\Options;
+namespace WpOop\Containers\FuncTest\Options;
 
-use Dhii\Data\Container\Exception\NotFoundExceptionInterface;
-use Dhii\Wp\Containers\TestHelpers\ComponentMockeryTrait;
+use Psr\Container\NotFoundExceptionInterface;
+use WP_Site;
+use WpOop\Containers\Options\BlogOptionsContainer as TestSubject;
+use WpOop\Containers\TestHelpers\ComponentMockeryTrait;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
-use Dhii\Wp\Containers\Options\BlogOptionsContainer as TestSubject;
 use PHPUnit\Framework\TestCase;
 
 class BlogOptionsContainerTest extends TestCase

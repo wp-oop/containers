@@ -1,15 +1,17 @@
-<?php declare(strict_types = 1);
+<?php
 
-namespace Dhii\Wp\Containers\Exception;
+declare(strict_types=1);
 
-use Dhii\Data\Container\Exception\NotFoundExceptionInterface;
+namespace WpOop\Containers\Exception;
+
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Throwable;
 
 /**
  * Basic implementation of container exception.
  *
- * @package Dhii\Wp\Containers
+ * @package WpOop\Containers
  */
 class NotFoundException extends ContainerException implements NotFoundExceptionInterface
 {
@@ -19,23 +21,23 @@ class NotFoundException extends ContainerException implements NotFoundExceptionI
      */
     protected $container;
     /**
-     * @var string|null
+     * @var string
      */
     protected $dataKey;
 
     /**
+     * @param string $dataKey The key that is not found.
      * @param string $message The exception message.
      * @param int $code The exception code.
      * @param Throwable|null $previous The inner exception, if any,
      * @param ContainerInterface|null $container The container that caused the exception, if any,
-     * @param string|null $dataKey The key that is not found.
      */
     public function __construct(
-        $message = "",
-        $code = 0,
+        string $dataKey,
+        string $message = "",
+        int $code = 0,
         Throwable $previous = null,
-        ContainerInterface $container = null,
-        string $dataKey = null
+        ContainerInterface $container = null
     ) {
         parent::__construct($message, $code, $previous);
         $this->container = $container;
@@ -43,11 +45,11 @@ class NotFoundException extends ContainerException implements NotFoundExceptionI
     }
 
     /**
-     * {@inheritDoc}
+     * Retrieves the key that was not found.
      *
      * @return string The key.
      */
-    public function getDataKey()
+    public function getDataKey(): string
     {
         return $this->dataKey;
     }

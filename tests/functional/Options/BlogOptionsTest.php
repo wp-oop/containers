@@ -1,32 +1,30 @@
 <?php
 
-namespace Dhii\Wp\Containers\FuncTest\Options;
+namespace WpOop\Containers\FuncTest\Options;
 
-use Dhii\Data\Container\Exception\NotFoundExceptionInterface;
-use Dhii\Wp\Containers\TestHelpers\ComponentMockeryTrait;
+use Brain\Monkey\Functions;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use WpOop\Containers\Options\BlogOptions as TestSubject;
+use WpOop\Containers\TestHelpers\ComponentMockeryTrait;
 use Exception;
 use PHPUnit\Framework\MockObject\MockObject;
-use Dhii\Wp\Containers\Options\SiteMeta as TestSubject;
 use PHPUnit\Framework\TestCase;
-use Brain\Monkey\Functions;
-use Dhii\Data\Container\Exception\ContainerExceptionInterface;
 use function Brain\Monkey\setUp;
 use function Brain\Monkey\tearDown;
 
-class SiteMetaTest extends TestCase
+class BlogOptionsTest extends TestCase
 {
 
     use ComponentMockeryTrait;
 
-    protected function setUp()
+    protected function start()
     {
-        parent::setUp();
         setUp();
     }
 
-    protected function tearDown()
+    protected function stop()
     {
-        parent::tearDown();
         tearDown();
     }
 
@@ -51,18 +49,20 @@ class SiteMetaTest extends TestCase
      */
     public function testHasTrue()
     {
+        $this->start();
+
         {
-            $siteId = rand(1, 99);
+            $blogId = rand(1, 99);
             $optionName = uniqid('option-name');
             $optionValue = uniqid('option-value');
             $default = uniqid('default');
             $subject = $this->createSubject(
-                [$siteId, $default],
+                [$blogId, $default],
                 null
             );
-            $fnGetNetworkOption = Functions\expect('get_network_option')
+            $fnGetBlogOption = Functions\expect('get_blog_option')
                 ->times(1)
-                ->with($siteId, $optionName, $default)
+                ->with($blogId, $optionName, $default)
                 ->andReturn($optionValue);
         }
 
@@ -73,6 +73,8 @@ class SiteMetaTest extends TestCase
         {
             $this->assertTrue($result, 'Incorrectly determined not having');
         }
+
+        $this->stop();
     }
 
     /**
@@ -82,17 +84,19 @@ class SiteMetaTest extends TestCase
      */
     public function testHasFalse()
     {
+        $this->start();
+
         {
-            $siteId = rand(1, 99);
+            $blogId = rand(1, 99);
             $optionName = uniqid('option-name');
             $default = uniqid('default-value');
             $subject = $this->createSubject(
-                [$siteId, $default],
+                [$blogId, $default],
                 null
             );
-            $fnGetNetworkOption = Functions\expect('get_network_option')
+            $fnGetBlogOption = Functions\expect('get_blog_option')
                 ->times(1)
-                ->with($siteId, $optionName, $default)
+                ->with($blogId, $optionName, $default)
                 ->andReturn($default);
         }
 
@@ -103,10 +107,12 @@ class SiteMetaTest extends TestCase
         {
             $this->assertFalse($result, 'Incorrectly determined having');
         }
+
+        $this->stop();
     }
 
     /**
-     * Provides sets of values for site meta.
+     * Provides sets of values for blog options.
      *
      * @return array[] The values.
      */
@@ -144,16 +150,16 @@ class SiteMetaTest extends TestCase
     public function testGet($optionValue)
     {
         {
-            $siteId = rand(1, 99);
+            $blogId = rand(1, 99);
             $optionName = uniqid('option-name');
             $default = uniqid('default');
             $subject = $this->createSubject(
-                [$siteId, $default],
+                [$blogId, $default],
                 null
             );
-            $fnGetNetworkOption = Functions\expect('get_network_option')
+            $fnGetBlogOption = Functions\expect('get_blog_option')
                 ->times(1)
-                ->with($siteId, $optionName, $default)
+                ->with($blogId, $optionName, $default)
                 ->andReturn($optionValue);
         }
 
@@ -174,17 +180,17 @@ class SiteMetaTest extends TestCase
     public function testGetNotFound()
     {
         {
-            $siteId = rand(1, 99);
+            $blogId = rand(1, 99);
             $optionName = uniqid('option-name');
             $optionValue = uniqid('option-value');
             $default = uniqid('default');
             $subject = $this->createSubject(
-                [$siteId, $default],
+                [$blogId, $default],
                 null
             );
-            $fnGetNetworkOption = Functions\expect('get_network_option')
+            $fnGetBlogOption = Functions\expect('get_blog_option')
                 ->times(1)
-                ->with($siteId, $optionName, $default)
+                ->with($blogId, $optionName, $default)
                 ->andReturn($default);
             $this->expectException(NotFoundExceptionInterface::class);
         }
@@ -211,16 +217,16 @@ class SiteMetaTest extends TestCase
     public function testSet($optionValue)
     {
         {
-            $siteId = rand(1, 99);
+            $blogId = rand(1, 99);
             $optionName = uniqid('option-name');
             $default = uniqid('default');
             $subject = $this->createSubject(
-                [$siteId, $default],
+                [$blogId, $default],
                 null
             );
-            $fnUpdateNetworkOption = Functions\expect('update_network_option')
+            $fnUpdateBlogOption = Functions\expect('update_blog_option')
                 ->times(1)
-                ->with($siteId, $optionName, $optionValue)
+                ->with($blogId, $optionName, $optionValue)
                 ->andReturn(true);
         }
 
@@ -246,20 +252,20 @@ class SiteMetaTest extends TestCase
     public function testSetSame($optionValue)
     {
         {
-            $siteId = rand(1, 99);
+            $blogId = rand(1, 99);
             $optionName = uniqid('option-name');
             $default = uniqid('default');
             $subject = $this->createSubject(
-                [$siteId, $default],
+                [$blogId, $default],
                 null
             );
-            $fnUpdateNetworkOption = Functions\expect('update_network_option')
+            $fnUpdateBlogOption = Functions\expect('update_blog_option')
                 ->times(1)
-                ->with($siteId, $optionName, $optionValue)
+                ->with($blogId, $optionName, $optionValue)
                 ->andReturn(false);
-            $fnGetNetworkOption = Functions\expect('get_network_option')
+            $fnGetBlogOption = Functions\expect('get_blog_option')
                 ->times(1)
-                ->with($siteId, $optionName, $default)
+                ->with($blogId, $optionName, $default)
                 ->andReturn($optionValue);
         }
 
@@ -280,21 +286,21 @@ class SiteMetaTest extends TestCase
     public function testSetFailure()
     {
         {
-            $siteId = rand(1, 99);
+            $blogId = rand(1, 99);
             $optionName = uniqid('option-name');
             $optionValue = uniqid('option-value');
             $default = uniqid('default');
             $subject = $this->createSubject(
-                [$siteId, $default],
+                [$blogId, $default],
                 null
             );
-            $fnUpdateNetworkOption = Functions\expect('update_network_option')
+            $fnUpdateBlogOption = Functions\expect('update_blog_option')
                 ->times(1)
-                ->with($siteId, $optionName, $optionValue)
+                ->with($blogId, $optionName, $optionValue)
                 ->andReturn(false);
-            $fnGetNetworkOption = Functions\expect('get_network_option')
+            $fnGetBlogOption = Functions\expect('get_blog_option')
                 ->times(1)
-                ->with($siteId, $optionName, $default)
+                ->with($blogId, $optionName, $default)
                 ->andReturn(uniqid('different-value'));
             $this->expectException(ContainerExceptionInterface::class);
         }
@@ -324,14 +330,14 @@ class SiteMetaTest extends TestCase
                 [$blogId, uniqid('default-value')],
                 null
             );
-            $fnDeleteNetworkOption = Functions\expect('delete_network_option')
+            $fnDeleteBlogOption = Functions\expect('delete_blog_option')
                 ->times(1)
                 ->with($blogId, $optionName)
                 ->andReturn(true);
         }
 
         {
-            $subject->delete($optionName);
+            $subject->unset($optionName);
         }
 
         {
@@ -346,6 +352,8 @@ class SiteMetaTest extends TestCase
      */
     public function testDeleteFailure()
     {
+        $this->start();
+
         {
             $blogId = rand(1, 99);
             $optionName = uniqid('option-name');
@@ -353,7 +361,7 @@ class SiteMetaTest extends TestCase
                 [$blogId, uniqid('default-value')],
                 null
             );
-            $fnDeleteNetworkOption = Functions\expect('delete_network_option')
+            $fnDeleteBlogOption = Functions\expect('delete_blog_option')
                 ->times(1)
                 ->with($blogId, $optionName)
                 ->andReturn(false);
@@ -361,11 +369,13 @@ class SiteMetaTest extends TestCase
 
         {
             $this->expectException(ContainerExceptionInterface::class);
-            $subject->delete($optionName);
+            $subject->unset($optionName);
         }
 
         {
             // Exception means success
         }
+
+        $this->stop();
     }
 }
