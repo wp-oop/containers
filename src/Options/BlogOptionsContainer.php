@@ -78,6 +78,7 @@ class BlogOptionsContainer implements ContainerInterface
      */
     public function has($id)
     {
+        /** @psalm-suppress InvalidCatch PSR-11 exceptions will always implement the interface */
         try {
             $this->getSite($id);
         } catch (NotFoundExceptionInterface $e) {
@@ -99,13 +100,14 @@ class BlogOptionsContainer implements ContainerInterface
      *
      * @param int|string $id The ID of the site to retrieve.
      * @return WP_Site The site instance.
+     * @psalm-suppress InvalidThrow PSR-11 exceptions will always implement the interface
      * @throws NotFoundExceptionInterface If site does not exist.
      * @throws Exception If problem retrieving.
      * @throws Throwable If problem running.
      */
     protected function getSite($id): WP_Site
     {
-        $site = $this->sitesContainer->get($id);
+        $site = $this->sitesContainer->get((string) $id);
 
         return $site;
     }
@@ -124,7 +126,7 @@ class BlogOptionsContainer implements ContainerInterface
         if (!is_callable($factory)) {
             throw new Exception(
                 $this->__('Could not invoke options factory'),
-                null,
+                0,
                 null
             );
         }

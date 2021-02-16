@@ -26,31 +26,21 @@ class NotFoundException extends ContainerException implements NotFoundExceptionI
     protected $dataKey;
 
     /**
+     * @param string|null $dataKey The key that is not found.
      * @param string $message The exception message.
      * @param int $code The exception code.
      * @param Throwable|null $previous The inner exception, if any,
      * @param ContainerInterface|null $container The container that caused the exception, if any,
-     * @param string|null $dataKey The key that is not found.
      */
     public function __construct(
+        string $dataKey,
         string $message = "",
         int $code = 0,
         Throwable $previous = null,
         ContainerInterface $container = null,
-        string $dataKey = null
     ) {
         parent::__construct($message, $code, $previous);
         $this->container = $container;
         $this->dataKey = $dataKey;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return string The key.
-     */
-    public function getDataKey()
-    {
-        return $this->dataKey;
     }
 }

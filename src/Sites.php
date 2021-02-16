@@ -31,11 +31,11 @@ class Sites implements ContainerInterface
 
         if (!$site) {
             throw new NotFoundException(
+                (string) $id,
                 $this->__('No site found for ID "%1$d"', [$id]),
                 0,
                 null,
-                $this,
-                (string) $id
+                $this
             );
         }
 
@@ -56,6 +56,7 @@ class Sites implements ContainerInterface
      */
     public function has($id)
     {
+        /** @psalm-suppress InvalidCatch */
         try {
             $site = $this->get($id);
         } catch (NotFoundExceptionInterface $e) {

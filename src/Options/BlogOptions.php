@@ -54,11 +54,11 @@ class BlogOptions implements MutableContainerInterface
             return $this->getOption($id);
         } catch (UnexpectedValueException $e) {
             throw new NotFoundException(
+                $id,
                 $this->__('Key "%1$s" not found', [$id]),
                 0,
                 $e,
-                $this,
-                $id
+                $this
             );
         } catch (Exception $e) {
             throw new ContainerException(
@@ -175,13 +175,14 @@ class BlogOptions implements MutableContainerInterface
             $isSuccessful = $value === $newValue;
         }
 
+        /** @psalm-suppress PossiblyUndefinedVariable If not successful, it will always be defined */
         if (!$isSuccessful) {
             throw new UnexpectedValueException(
                 $this->__(
                     'New option value did not match the intended value: "%1$s" VS "%2$s"',
                     [
                         print_r($value, true),
-                        print_r($newValue, true),
+                        print_r($newValue,true),
                     ]
                 )
             );

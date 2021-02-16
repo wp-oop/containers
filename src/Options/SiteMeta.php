@@ -51,11 +51,11 @@ class SiteMeta implements MutableContainerInterface
             return $this->getMeta($id);
         } catch (UnexpectedValueException $e) {
             throw new NotFoundException(
+                $id,
                 $this->__('Meta key "%1$s" not found', [$id]),
                 0,
                 $e,
-                $this,
-                $id
+                $this
             );
         } catch (Exception $e) {
             throw new ContainerException(
@@ -172,6 +172,7 @@ class SiteMeta implements MutableContainerInterface
             $isSuccessful = $value === $newValue;
         }
 
+        /** @psalm-suppress PossiblyUndefinedVariable If unsuccessful, $newValue will be defined */
         if (!$isSuccessful) {
             throw new UnexpectedValueException(
                 $this->__(

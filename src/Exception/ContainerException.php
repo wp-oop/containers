@@ -39,7 +39,7 @@ class ContainerException extends Exception implements ContainerExceptionInterfac
     }
 
     /**
-     * {@inheritDoc}
+     * @return ContainerInterface|null
      */
     public function getContainer()
     {

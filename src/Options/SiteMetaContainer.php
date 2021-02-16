@@ -78,6 +78,7 @@ class SiteMetaContainer implements ContainerInterface
      */
     public function has($id)
     {
+        /** @psalm-suppress InvalidCatch PSR-11 exceptions will always implement respective interfaces */
         try {
             $this->getSite($id);
         } catch (NotFoundExceptionInterface $e) {
@@ -99,13 +100,14 @@ class SiteMetaContainer implements ContainerInterface
      *
      * @param int|string $id The ID of the site to retrieve.
      * @return WP_Site The site instance.
+     * @psalm-suppress InvalidThrow PSR-11 exceptions always implement respective interfaces
      * @throws NotFoundExceptionInterface If problem retrieving.
      * @throws Exception If problem retrieving.
      * @throws Throwable If problem running.
      */
     protected function getSite($id): WP_Site
     {
-        $site = $this->sitesContainer->get($id);
+        $site = $this->sitesContainer->get((string) $id);
 
         return $site;
     }
@@ -126,7 +128,7 @@ class SiteMetaContainer implements ContainerInterface
         if (!is_callable($factory)) {
             throw new Exception(
                 $this->__('Could not invoke metadata factory'),
-                null,
+                0,
                 null
             );
         }
