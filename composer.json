@@ -1,5 +1,5 @@
 {
-    "name": "dhii/wp-containers",
+    "name": "wp-oop/containers",
     "description": "PSR-11 container implementations that wrap some WP features, for convenience and interoperability.",
     "type": "library",
     "license": "MIT",
