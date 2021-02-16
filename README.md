@@ -1,10 +1,6 @@
 # Dhii - WP Containers
 
-[![Build Status](https://travis-ci.org/Dhii/wp-containers.svg?branch=develop)](https://travis-ci.org/Dhii/wp-containers)
-[![Code Climate](https://codeclimate.com/github/Dhii/wp-containers/badges/gpa.svg)](https://codeclimate.com/github/Dhii/wp-containers)
-[![Test Coverage](https://codeclimate.com/github/Dhii/wp-containers/badges/coverage.svg)](https://codeclimate.com/github/Dhii/wp-containers/coverage)
-[![Join the chat at https://gitter.im/Dhii/wp-containers](https://badges.gitter.im/Dhii/wp-containers.svg)](https://gitter.im/Dhii/wp-containers?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![This package complies with Dhii standards](https://img.shields.io/badge/Dhii-Compliant-green.svg?style=flat-square)][Dhii]
+![Continuous Integration](https://github.com/wp-oop/containers/workflows/Continuous%20Integration/badge.svg)
 
 ## Details
 [PSR-11][] container implementations that wrap some WP features, for convenience and interoperability.
@@ -13,7 +9,7 @@
 ### Retrieve sites by key
 
 ```php
-use Dhii\Wp\Containers\Sites;
+use WpOop\Containers\Sites;
 use WP_Site;
 
 $sites = new Sites();
@@ -24,9 +20,9 @@ assert($site2 instanceof WP_Site);
 ### Retrieve site options by key
 
 ```php
-use Dhii\Wp\Containers\Options\BlogOptions;
-use Dhii\Wp\Containers\Options\BlogOptionsContainer;
-use Dhii\Wp\Containers\Sites;
+use WpOop\Containers\Options\BlogOptions;
+use WpOop\Containers\Options\BlogOptionsContainer;
+use WpOop\Containers\Sites;
 
 // Set up sites container (see other example)
 // ...
@@ -48,9 +44,9 @@ $myOption = $blog3Options->get('my_option');
 ### Retrieve site meta by key
 
 ```php
-use Dhii\Wp\Containers\Options\SiteMeta;
-use Dhii\Wp\Containers\Options\SiteMetaContainer;
-use Dhii\Wp\Containers\Sites;
+use WpOop\Containers\Options\SiteMeta;
+use WpOop\Containers\Options\SiteMetaContainer;
+use WpOop\Containers\Sites;
 
 // Set up sites container (see other example)
 // ...
@@ -72,10 +68,9 @@ $myMeta = $blog4Meta->get('my_meta');
 ### Structured error handling
 
 ```php
-use Dhii\Wp\Containers\Options\BlogOptions;
+use WpOop\Containers\Options\BlogOptions;
 use Psr\Container\NotFoundExceptionInterface;
-use Psr\Container\ContainerExceptionInterface;
-use Dhii\Data\Container\Exception\NotFoundExceptionInterface as ExtendedNotFoundException;
+use WpOop\Containers\Exception\NotFoundException;
 
 // Set up options (see previous examples)
 // ...
@@ -85,7 +80,7 @@ try {
     $options->set('other_option', 'My Value');
     $value = $options->get('my_option');
 } catch (NotFoundExceptionInterface $e) {
-    assert($e instanceof ExtendedNotFoundException);
+    assert($e instanceof NotFoundException);
     echo sprintf('Option "%1$s" does not exist', $e->getDataKey());
     assert($e->getContainer() === $options);
 }
@@ -102,7 +97,7 @@ by throwing PSR-11 exceptions. Furthermore, the original behaviour of these exce
 extended to allow retrieval of the key that was not found (when applicable) and the container that failed
 the operation. This is optional, however, and depending simply on the PSR-11 exceptions will work as expected.
 
-The `set()`, `has()`, and `delete()` also throw [`ContainerExceptionInterface`][] on failure.
+The `set()`, `has()`, and `unset()` also throw [`ContainerExceptionInterface`][] on failure.
 
 ### Wraps WP
 
