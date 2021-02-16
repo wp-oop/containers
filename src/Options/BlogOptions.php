@@ -183,7 +183,7 @@ class BlogOptions implements MutableContainerInterface
                     'New option value did not match the intended value: "%1$s" VS "%2$s"',
                     [
                         print_r($value, true),
-                        print_r($newValue,true),
+                        print_r($newValue, true),
                     ]
                 )
             );

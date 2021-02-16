@@ -39,9 +39,8 @@ class ContainerException extends Exception implements ContainerExceptionInterfac
     }
 
     /**
-     * @return ContainerInterface|null
      */
-    public function getContainer()
+    public function getContainer(): ?ContainerInterface
     {
         return $this->container;
     }

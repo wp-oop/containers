@@ -49,7 +49,7 @@ class NotFoundException extends ContainerException implements NotFoundExceptionI
      *
      * @return string The key.
      */
-    public function getDataKey()
+    public function getDataKey(): string
     {
         return $this->dataKey;
     }
