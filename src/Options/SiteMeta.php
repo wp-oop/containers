@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace WpOop\Containers\Options;
 
 use Dhii\Collection\MutableContainerInterface;
+use Exception;
+use RuntimeException;
+use UnexpectedValueException;
 use WpOop\Containers\Exception\ContainerException;
 use WpOop\Containers\Exception\NotFoundException;
 use WpOop\Containers\Util\StringTranslatingTrait;
-use Exception;
-use RuntimeException;
-use Throwable;
-use UnexpectedValueException;
 
 /**
  * Metadata for a particular site.
@@ -44,6 +43,8 @@ class SiteMeta implements MutableContainerInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-suppress MissingParamType Missing in PSR-11.
      */
     public function get($id)
     {
@@ -69,6 +70,8 @@ class SiteMeta implements MutableContainerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @psalm-suppress MissingParamType Missing in PSR-11.
      */
     public function has($id)
     {
@@ -132,7 +135,7 @@ class SiteMeta implements MutableContainerInterface
      *
      * @throws UnexpectedValueException If the meta value matches the configured default.
      * @throws RuntimeException If problem retrieving.
-     * @throws Throwable If problem running.
+     * @throws Exception If problem running.
      */
     protected function getMeta(string $name)
     {
@@ -160,7 +163,7 @@ class SiteMeta implements MutableContainerInterface
      *
      * @throws UnexpectedValueException If new meta value does not match what was being set.
      * @throws RuntimeException If problem setting.
-     * @throws Throwable If problem running.
+     * @throws Exception If problem running.
      */
     protected function setMeta(string $name, $value): void
     {

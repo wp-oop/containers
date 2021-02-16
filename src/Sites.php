@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace WpOop\Containers;
 
 use Dhii\Collection\ContainerInterface;
-use WpOop\Containers\Exception\ContainerException;
-use WpOop\Containers\Exception\NotFoundException;
-use WpOop\Containers\Util\StringTranslatingTrait;
 use Psr\Container\NotFoundExceptionInterface;
 use WP_Site;
+use WpOop\Containers\Exception\NotFoundException;
+use WpOop\Containers\Util\StringTranslatingTrait;
 
 /**
  * Allows retrieval of WP site objects by ID.
@@ -22,6 +21,8 @@ class Sites implements ContainerInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-suppress MissingParamType Missing in PSR-11.
      *
      * @return WP_Site The site for the specified ID.
      */
@@ -39,20 +40,13 @@ class Sites implements ContainerInterface
             );
         }
 
-        if (!($site instanceof WP_Site)) {
-            throw new ContainerException(
-                $this->__('Site #%1$d is invalid', [$id]),
-                0,
-                null,
-                $this
-            );
-        }
-
         return $site;
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-suppress MissingParamType Missing in PSR-11.
      */
     public function has($id)
     {

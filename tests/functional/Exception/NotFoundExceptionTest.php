@@ -44,7 +44,7 @@ class NotFoundExceptionTest extends TestCase
             $container = $this->createContainer([]);
             $dataKey = uniqid('data-key');
 
-            $subject = $this->createSubject([$message, $code, $prev, $container, $dataKey], null);
+            $subject = $this->createSubject([$dataKey, $message, $code, $prev, $container,], null);
         }
 
         {

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace WpOop\Containers\Exception;
 
-use Psr\Container\NotFoundExceptionInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Throwable;
 
 /**
@@ -21,12 +21,12 @@ class NotFoundException extends ContainerException implements NotFoundExceptionI
      */
     protected $container;
     /**
-     * @var string|null
+     * @var string
      */
     protected $dataKey;
 
     /**
-     * @param string|null $dataKey The key that is not found.
+     * @param string $dataKey The key that is not found.
      * @param string $message The exception message.
      * @param int $code The exception code.
      * @param Throwable|null $previous The inner exception, if any,
@@ -37,10 +37,20 @@ class NotFoundException extends ContainerException implements NotFoundExceptionI
         string $message = "",
         int $code = 0,
         Throwable $previous = null,
-        ContainerInterface $container = null,
+        ContainerInterface $container = null
     ) {
         parent::__construct($message, $code, $previous);
         $this->container = $container;
         $this->dataKey = $dataKey;
+    }
+
+    /**
+     * Retrieves the key that was not found.
+     *
+     * @return string The key.
+     */
+    public function getDataKey()
+    {
+        return $this->dataKey;
     }
 }

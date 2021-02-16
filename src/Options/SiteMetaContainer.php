@@ -6,13 +6,13 @@ namespace WpOop\Containers\Options;
 
 use Dhii\Collection\ContainerInterface;
 use Dhii\Collection\MutableContainerInterface;
-use WpOop\Containers\Exception\ContainerException;
-use WpOop\Containers\Util\StringTranslatingTrait;
 use Exception;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface as BaseContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Throwable;
 use WP_Site;
+use WpOop\Containers\Exception\ContainerException;
+use WpOop\Containers\Util\StringTranslatingTrait;
 
 /**
  * Creates and returns metadata containers for sites.
@@ -50,17 +50,21 @@ class SiteMetaContainer implements ContainerInterface
     /**
      * Retrieves metadata for a site with the specified ID.
      *
+     * @inheritDoc
+     *
      * @param int|string $id The numeric ID of the site to retrieve metadata for.
      *
      * @return MutableContainerInterface The metadata.
      */
     public function get($id): MutableContainerInterface
     {
-        $site = $this->getSite($id);
-        $id = (int) $site->blog_id;
-
+        /** @psalm-suppress InvalidCatch PSR-11 exceptions will always implement the interface */
         try {
+            $site = $this->getSite($id);
+            $id = (int) $site->blog_id;
             $options = $this->createMeta($id);
+        } catch (ContainerExceptionInterface $e) {
+            throw $e;
         } catch (Exception $e) {
             throw new ContainerException(
                 $this->__('Could not get meta for site #%1$d', [$id]),
@@ -75,6 +79,8 @@ class SiteMetaContainer implements ContainerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @psalm-suppress MissingParamType Missing in PSR-11.
      */
     public function has($id)
     {
@@ -103,7 +109,7 @@ class SiteMetaContainer implements ContainerInterface
      * @psalm-suppress InvalidThrow PSR-11 exceptions always implement respective interfaces
      * @throws NotFoundExceptionInterface If problem retrieving.
      * @throws Exception If problem retrieving.
-     * @throws Throwable If problem running.
+     * @throws ContainerExceptionInterface If problem retrieving.
      */
     protected function getSite($id): WP_Site
     {

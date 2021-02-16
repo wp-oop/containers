@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace WpOop\Containers\Options;
 
 use Dhii\Collection\MutableContainerInterface;
+use Exception;
+use RuntimeException;
+use UnexpectedValueException;
 use WpOop\Containers\Exception\ContainerException;
 use WpOop\Containers\Exception\NotFoundException;
 use WpOop\Containers\Util\StringTranslatingTrait;
-use Exception;
-use RuntimeException;
-use Throwable;
-use UnexpectedValueException;
 
 /**
  * Allows access to options for a particular site.
@@ -72,6 +71,8 @@ class BlogOptions implements MutableContainerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @psalm-suppress MissingParamType Missing in PSR-11.
      */
     public function has($id)
     {
@@ -135,7 +136,7 @@ class BlogOptions implements MutableContainerInterface
      *
      * @throws UnexpectedValueException If the option value matches the configured default.
      * @throws RuntimeException If problem retrieving.
-     * @throws Throwable If problem running.
+     * @throws Exception If problem running.
      */
     protected function getOption(string $name)
     {
@@ -163,7 +164,7 @@ class BlogOptions implements MutableContainerInterface
      *
      * @throws UnexpectedValueException If new option value does not match what was being set.
      * @throws RuntimeException If problem setting.
-     * @throws Throwable If problem running.
+     * @throws Exception If problem running.
      */
     protected function setOption(string $name, $value): void
     {

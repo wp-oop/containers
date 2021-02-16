@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace WpOop\Containers\Options;
 
-use Dhii\Collection\MutableContainerInterface;
 use Dhii\Collection\ContainerInterface;
-use WpOop\Containers\Exception\ContainerException;
-use Psr\Container\NotFoundExceptionInterface;
-use WpOop\Containers\Util\StringTranslatingTrait;
+use Dhii\Collection\MutableContainerInterface;
 use Exception;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface as BaseContainerInterface;
-use Throwable;
+use Psr\Container\NotFoundExceptionInterface;
 use WP_Site;
+use WpOop\Containers\Exception\ContainerException;
+use WpOop\Containers\Util\StringTranslatingTrait;
 
 /**
  * Creates and returns option containers for sites.
@@ -50,17 +50,21 @@ class BlogOptionsContainer implements ContainerInterface
     /**
      * Retrieves options for a site with the specified ID.
      *
+     * @inheritDoc
+     *
      * @param int|string $id The numeric ID of the site to retrieve options for.
      *
      * @return MutableContainerInterface The options.
      */
     public function get($id): MutableContainerInterface
     {
-        $site = $this->getSite($id);
-        $id = (int) $site->blog_id;
-
+        /** @psalm-suppress InvalidCatch PSR-11 exceptions will always implement the interface */
         try {
+            $site = $this->getSite($id);
+            $id = (int) $site->blog_id;
             $options = $this->createOptions($id);
+        } catch (ContainerExceptionInterface $e) {
+            throw $e;
         } catch (Exception $e) {
             throw new ContainerException(
                 $this->__('Could not get options for site #%1$d', [$id]),
@@ -75,6 +79,8 @@ class BlogOptionsContainer implements ContainerInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @psalm-suppress MissingParamType Missing in PSR-11.
      */
     public function has($id)
     {
@@ -102,8 +108,8 @@ class BlogOptionsContainer implements ContainerInterface
      * @return WP_Site The site instance.
      * @psalm-suppress InvalidThrow PSR-11 exceptions will always implement the interface
      * @throws NotFoundExceptionInterface If site does not exist.
+     * @throws ContainerExceptionInterface If problem retrieving.
      * @throws Exception If problem retrieving.
-     * @throws Throwable If problem running.
      */
     protected function getSite($id): WP_Site
     {
